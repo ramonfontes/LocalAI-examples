@@ -74,7 +74,7 @@ python convert_hf_to_gguf.py --outtype f16 ../qlora-out/merged
 # Start off by making a basic q4_0 4-bit quantization.
 # It's important to have 'ggml' in the name of the quant for some
 # software to recognize it's file format.
-pushd llama.cpp &&  ./llama-quantize ../qlora-out/merged/ggml-model-f16.gguf \
+cd llama.cpp/build/bin &&  ./llama-quantize ../qlora-out/merged/ggml-model-f16.gguf \
     ../custom-model-q4_0.bin q4_0
 
 ```
