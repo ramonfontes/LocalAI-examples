@@ -69,7 +69,7 @@ cd llama.cpp && make GGML_CUDA=1
 
 # We need to convert the pytorch model into ggml for quantization
 # It crates 'ggml-model-f16.bin' in the 'merged' directory.
-python convert_hf_to_gguf.py --outtype f16 ../qlora-out/merged
+python3 convert_hf_to_gguf.py --outtype f16 ../qlora-out/merged
 
 # Start off by making a basic q4_0 4-bit quantization.
 # It's important to have 'ggml' in the name of the quant for some
