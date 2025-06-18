@@ -50,7 +50,7 @@ python -m axolotl.cli.preprocess axolotl.yaml
 Now we are ready to start the fine-tuning process:
 ```bash
 # Fine-tune
-accelerate launch -m axolotl.cli.train axolotl.yaml
+accelerate launch -m axolotl.cli.train axolotl.yaml --load_in_8bit=False
 ```
 
 After we have finished the fine-tuning, we merge the Lora base with the model:
@@ -65,12 +65,11 @@ And we convert it to the gguf format that LocalAI can consume:
 
 # Convert to gguf
 git clone https://github.com/ggerganov/llama.cpp.git
-pushd llama.cpp && make GGML_CUDA=1 && popd
+cd llama.cpp && make GGML_CUDA=1
 
 # We need to convert the pytorch model into ggml for quantization
 # It crates 'ggml-model-f16.bin' in the 'merged' directory.
-pushd llama.cpp && python convert.py --outtype f16 \
-    ../qlora-out/merged/pytorch_model-00001-of-00002.bin && popd
+python convert_hf_to_gguf.py --outtype f16 ../qlora-out/merged
 
 # Start off by making a basic q4_0 4-bit quantization.
 # It's important to have 'ggml' in the name of the quant for some
